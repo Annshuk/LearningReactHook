@@ -1,9 +1,15 @@
-import React, { memo } from 'react';
+import React, { useCallback, memo } from 'react';
 
-const GreetName = ({ name, onChange }) => {
-  console.log('GreetName render');
+const GreetName = ({ dispatch }) => {
+  /**
+   * handleChange
+   * using callback hook prevent to render another child componet
+   */
+  const handleChange = useCallback((event) => {
+    dispatch({ name: event.target.value });
+  }, []);
 
-  return <input type="text" value={name} onChange={onChange} />;
+  return <input type="text" onChange={handleChange} />;
 };
 
 export default memo(GreetName);
