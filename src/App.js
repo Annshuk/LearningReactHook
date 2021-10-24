@@ -17,6 +17,7 @@ const changeName = (state, action) => ({
  * how you can prevent re-render
  */
 const App = ({ intialValue = 'Anshuk' }) => {
+  console.log('master');
   const [state, setState] = useReducer(changeName, { name: intialValue });
 
   const { name } = state;
