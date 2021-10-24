@@ -9,6 +9,8 @@ const GreetName = ({ dispatch }) => {
     dispatch({ name: event.target.value });
   }, []);
 
+  console.log('Greet render');
+
   return <input type="text" onChange={handleChange} />;
 };
 
