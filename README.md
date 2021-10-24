@@ -24,7 +24,7 @@
       <br />
       <Greet name={name} onChange={handleChange} />
       <br />
-      <GreetName onChange={handleChange} />
+      <GreetName onChange={handleChange} /> // if you are passing method without usig useCallback this compponent will also re-render as React create everytime new instance of the functon, with useCallbacks, it will memorized the instanse and wont re-render it not updating
     </div>
   );
 };
