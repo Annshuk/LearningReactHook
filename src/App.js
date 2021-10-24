@@ -22,11 +22,11 @@ const App = ({ intialValue = 'Anshuk' }) => {
   const { name } = state;
 
   return (
-    <div>
+    <>
       <Greet name={name} />
       <br />
       <GreetName dispatch={dispatch} />
-    </div>
+    </>
   );
 };
 
