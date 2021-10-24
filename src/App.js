@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer } from 'react';
 
 import Greet from './Greet';
 import GreetName from './GreetName';
@@ -16,8 +16,8 @@ const changeName = (state, action) => ({
  *
  * how you can prevent re-render
  */
-const App = ({ intialValue = 'Anshuk' }) => {
-  const [state, dispatch] = useReducer(changeName, { name: intialValue });
+const App = () => {
+  const [state, dispatch] = useReducer(changeName, { name: 'Test' });
 
   const { name } = state;
 
