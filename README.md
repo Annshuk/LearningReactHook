@@ -5,7 +5,7 @@
 # How and when need to use memorized Hooks
 
 ```const App = ({ intialValue = 'Anshuk' }) => {
-  const [state, setState] = useReducer(changeName, { name: intialValue });
+  const [state, dispatch] = useReducer(changeName, { name: intialValue });
 
   const { name } = state;
 
@@ -14,7 +14,7 @@
    * using callback hook prevent to render another child componet
    */
   const handleChange = useCallback((event) => {
-    setState({ name: event.target.value });
+    dispatch({ name: event.target.value });
   }, []);
 
   return (
