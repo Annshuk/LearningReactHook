@@ -9,7 +9,7 @@ const GreetName = ({ dispatch, stateName = 'name', ...rest }) => {
     dispatch({ [stateName]: event.target.value });
   };
 
-  console.log('Greet render');
+  console.log('GreetName render');
 
   return <input type="text" onChange={handleChange} {...rest} />;
 };
