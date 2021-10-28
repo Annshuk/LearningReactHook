@@ -1,20 +1,14 @@
 import React, { useReducer } from 'react';
 
-import { StateMachineProvider, createStore } from 'little-state-machine';
+import { createStore, useStateMachine } from 'little-state-machine';
 
 import Greet from './Greet';
 import Amount from './Amount';
 import GreetName from './GreetName';
 
+import { updateNameAction } from './store';
+
 import './style.css';
-
-const initialState = {
-  name: '',
-  amout: '',
-  test: '',
-};
-
-createStore({ ...initialState });
 
 const changeName = (state, action) => ({
   ...state,
@@ -28,19 +22,15 @@ const changeName = (state, action) => ({
  * how you can prevent re-render
  */
 const App = () => {
-  const [state, dispatch] = useReducer(changeName, {
-    name: 'Test',
-    number: 0,
-  });
+  const { actions, state } = useStateMachine({ updateNameAction });
 
-  const { name, number } = state;
-
+  console.log(state);
   return (
-    <StateMachineProvider>
-      <Greet name={name} />
+    <>
+      <Greet name={state.name} />
       <br />
-      <GreetName dispatch={dispatch} />
-    </StateMachineProvider>
+      <GreetName actionsUpdate={actions.updateNameAction} />
+    </>
   );
 };
 

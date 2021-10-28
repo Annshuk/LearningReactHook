@@ -1,17 +1,12 @@
 import React, { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Flex } from 'rebass';
-import { useStateMachine } from 'little-state-machine';
 
-import { updateNameAction } from './store';
-
-const GreetName = ({ dispatch, stateName = 'name', ...rest }) => {
-  const { state, actions } = useStateMachine({ updateNameAction });
-
+const GreetName = ({ actionsUpdate, ...rest }) => {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (formPayload) => {
-    actions.updateNameAction({ name: formPayload.first, ...formPayload });
+    actionsUpdate({ ...formPayload });
   };
 
   /**
@@ -19,14 +14,17 @@ const GreetName = ({ dispatch, stateName = 'name', ...rest }) => {
    *
    */
   const handleChange = (event) => {
-    dispatch({ [stateName]: event.target.value });
+    actionsUpdate({ name: event.target.value });
   };
 
   console.log('GreetName render');
 
   return (
     <Flex flexDirection="column" width="200px" {...rest}>
-      <input onChange={handleChange} />
+      <input
+        {...register('name', { required: true })}
+        onChange={handleChange}
+      />
       <br />
       <input {...register('first', { required: true })} />
       <br />
