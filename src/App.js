@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 
-import { createStore, useStateMachine } from 'little-state-machine';
+import { useStateMachine } from 'little-state-machine';
 
 import Greet from './Greet';
 import Amount from './Amount';
@@ -9,11 +9,6 @@ import GreetName from './GreetName';
 import { updateNameAction } from './store';
 
 import './style.css';
-
-const changeName = (state, action) => ({
-  ...state,
-  ...action,
-});
 
 /**
  * App
@@ -24,7 +19,6 @@ const changeName = (state, action) => ({
 const App = () => {
   const { actions, state } = useStateMachine({ updateNameAction });
 
-  console.log(state);
   return (
     <>
       <Greet name={state.name} />
