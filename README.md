@@ -1,4 +1,4 @@
-# react-34zpft
+# react-hooks with react-hook-form and little-state-machine
 
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-34zpft)
 # How to stop re-rerendering when using state-machine
