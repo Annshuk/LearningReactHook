@@ -1,10 +1,20 @@
 import React, { useReducer } from 'react';
 
+import { StateMachineProvider, createStore } from 'little-state-machine';
+
 import Greet from './Greet';
 import Amount from './Amount';
 import GreetName from './GreetName';
 
 import './style.css';
+
+const initialState = {
+  name: '',
+  amout: '',
+  test: '',
+};
+
+createStore({ ...initialState });
 
 const changeName = (state, action) => ({
   ...state,
@@ -26,15 +36,11 @@ const App = () => {
   const { name, number } = state;
 
   return (
-    <>
+    <StateMachineProvider>
       <Greet name={name} />
       <br />
       <GreetName dispatch={dispatch} />
-      <br />
-      <Amount number={number} />
-      <br />
-      <GreetName dispatch={dispatch} type="number" stateName="number" />
-    </>
+    </StateMachineProvider>
   );
 };
 

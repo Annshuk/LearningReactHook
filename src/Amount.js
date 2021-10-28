@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
+import { useForm } from 'react-hook-form';
+import { Flex } from 'rebass';
 
 const Amount = ({ number }) => {
-  console.log('Amount render', number);
-
-  return <>This Total: {number}</>;
+  return number;
 };
 
 export default memo(Amount);
