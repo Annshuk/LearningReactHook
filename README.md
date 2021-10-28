@@ -1,7 +1,7 @@
 # react-34zpft
 
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-34zpft)
-# How to stop re-rerendering when useing state-machine
+# How to stop re-rerendering when using state-machine
 
 sending action updater as prosp will not causes re-rendering to childern component, as using directly will check the state and it will always re-render
 
