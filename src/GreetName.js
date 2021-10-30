@@ -1,34 +1,29 @@
 import React, { memo } from 'react';
-import { useForm } from 'react-hook-form';
-import { Flex } from 'rebass';
+import { useFormContext } from 'react-hook-form';
+import { Flex, Text } from 'rebass';
 
-const GreetName = ({ actionsUpdate, ...rest }) => {
-  const { register, handleSubmit, errors } = useForm();
+const GreetName = ({ onChange, ...rest }) => {
+  const { register, handleSubmit, errors } = useFormContext();
 
   const onSubmit = (formPayload) => {
     actionsUpdate({ ...formPayload });
   };
 
-  /**
-   * handleChange
-   *
-   */
-  const handleChange = (event) => {
-    actionsUpdate({ name: event.target.value });
-  };
-
-  console.log('GreetName render');
+  console.log('GreetName');
 
   return (
     <Flex flexDirection="column" width="200px" {...rest}>
+      <Text>{errors?.name?.message}</Text>
       <input
-        {...register('name', { required: true })}
-        onChange={handleChange}
+        {...register('name', { required: 'Name is Required' })}
+        onChange={onChange}
       />
       <br />
-      <input {...register('first', { required: true })} />
+      <Text>{errors?.first?.message}</Text>
+      <input {...register('first', { required: 'First Name is Required' })} />
       <br />
-      <input {...register('last', { required: true })} />
+      <Text>{errors?.last?.message}</Text>
+      <input {...register('last', { required: 'last Name is Required' })} />
       <br />
       <button onClick={handleSubmit(onSubmit)}>onSubmit</button>
     </Flex>

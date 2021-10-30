@@ -1,9 +1,8 @@
-import React from 'react';
-
+import React, { useCallback } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
 
 import Greet from './Greet';
-import Amount from './Amount';
 import GreetName from './GreetName';
 
 import { updateNameAction } from './store';
@@ -17,14 +16,31 @@ import './style.css';
  * how you can prevent re-render
  */
 const App = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors = {} },
+    ...restProps
+  } = useForm({ mode: 'onBlur', reValidateMode: 'onBlur' });
   const { actions, state } = useStateMachine({ updateNameAction });
 
+  console.log('render', errors);
+
+  /**
+   * handleChange
+   *
+   */
+  const handleChange = useCallback((event) => {
+    console.log(event.target.value);
+    actions.updateNameAction({ name: event.target.value });
+  }, []);
+
   return (
-    <>
+    <FormProvider {...{ register, handleSubmit, errors, ...restProps }}>
       <Greet name={state.name} />
       <br />
-      <GreetName actionsUpdate={actions.updateNameAction} />
-    </>
+      <GreetName onChange={handleChange} />
+    </FormProvider>
   );
 };
 
