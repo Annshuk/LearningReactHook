@@ -22,16 +22,14 @@ const App = () => {
     formState: { errors = {} },
     ...restProps
   } = useForm({ mode: 'onBlur', reValidateMode: 'onBlur' });
-  const { actions, state } = useStateMachine({ updateNameAction });
 
-  console.log('render', errors);
+  const { actions, state } = useStateMachine({ updateNameAction });
 
   /**
    * handleChange
    *
    */
   const handleChange = useCallback((event) => {
-    console.log(event.target.value);
     actions.updateNameAction({ name: event.target.value });
   }, []);
 
