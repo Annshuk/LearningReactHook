@@ -9,6 +9,7 @@ import { updateNameAction } from './store';
 import Greet from './Greet';
 import GreetName from './GreetName';
 import { CheckUnchecked } from './CheckUnchecked';
+import { Textarea } from './Textarea';
 
 /**
  * App
@@ -39,6 +40,7 @@ const App = () => {
       <br />
       <GreetName onChange={handleChange} />
       <CheckUnchecked />
+      <Textarea id="textFields" maxLength={10} />
     </FormProvider>
   );
 };
