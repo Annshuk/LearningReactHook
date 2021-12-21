@@ -11,6 +11,7 @@ import GreetName from './GreetName';
 import { CheckUnchecked } from './CheckUnchecked';
 import { Textarea } from './Textarea';
 
+const totalCount = 90;
 /**
  * App
  * use of memo and hook callbacks,
@@ -40,7 +41,7 @@ const App = () => {
       <br />
       <GreetName onChange={handleChange} />
       <CheckUnchecked />
-      <Textarea id="textFields" maxLength={10} />
+      <Textarea id="textFields" maxLength={totalCount} />
     </FormProvider>
   );
 };
