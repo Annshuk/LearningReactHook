@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { StateMachineProvider, createStore } from 'little-state-machine';
 
 import App from './App';
@@ -12,7 +12,7 @@ const initialState = {
 
 createStore({ ...initialState });
 
-ReactDOM.render(
+render(
   <StateMachineProvider>
     <App />
   </StateMachineProvider>,
