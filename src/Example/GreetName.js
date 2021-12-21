@@ -5,11 +5,9 @@ import { Flex, Text } from 'rebass';
 const GreetName = ({ onChange, ...rest }) => {
   const { register, handleSubmit, errors } = useFormContext();
 
-  const onSubmit = (formPayload) => {
-    actionsUpdate({ ...formPayload });
-  };
+  const onSubmit = (formPayload) => {};
 
-  console.log('GreetName');
+  console.log('greetname', errors);
 
   return (
     <Flex flexDirection="column" width="200px" {...rest}>
