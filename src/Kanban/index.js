@@ -1,14 +1,35 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Flex, Box } from 'rebass';
+import { Flex, Box } from 'rebass';
+import { Card, ListGroup } from 'react-bootstrap';
+
+import { KanbanSection } from './KanbanSection';
 
 const stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
+
+/**
+ * make stageTask for Cards
+ */
+const createStageTasks = (tasks) =>
+  stagesNames.map((element, eindex) => {
+    const stageTasks = [];
+
+    tasks.forEach((item) => {
+      if (item.stage === eindex) {
+        stageTasks.push(item);
+      }
+    });
+
+    return stageTasks;
+  });
 
 const Kanban = () => {
   const [tasks, setTasks] = useState([
     { name: '1', stage: 0 },
     { name: '2', stage: 0 },
   ]);
+
+  const tasksRef = useRef(createStageTasks(tasks));
 
   const inputRef = useRef();
 
@@ -26,34 +47,25 @@ const Kanban = () => {
         <Link to="/">Home</Link>
       </nav>
 
-      <Card mt="10px">
-        <section>
-          <input
-            value={inputRef.current}
-            onChange={onInputChange}
-            id="create-task-input"
-            type="text"
-            placeholder="New task name"
-            data-testid="create-task-input"
-          />
-          <button
-            onClick={addTask}
-            type="submit"
-            data-testid="create-task-button"
-          >
-            Create task
-          </button>
-        </section>
-      </Card>
-      <Card mt="10px" width="250px">
-        <h2>Backlog</h2>
-      </Card>
-      <Card mt="10px" width="250px">
-        <h2>To Do</h2>
-      </Card>
-      <Card mt="10px" width="250px">
-        <h2>Done</h2>
-      </Card>
+      <section>
+        <input
+          value={inputRef.current}
+          onChange={onInputChange}
+          id="create-task-input"
+          type="text"
+          placeholder="New task name"
+          data-testid="create-task-input"
+        />
+        <button
+          onClick={addTask}
+          type="submit"
+          data-testid="create-task-button"
+        >
+          Create task
+        </button>
+      </section>
+
+      <KanbanSection tasks={tasksRef.current} stagesNames={stagesNames} />
     </Box>
   );
 };
