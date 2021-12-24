@@ -14,7 +14,7 @@ const KanbanSection = ({ tasks, stagesNames }) => {
             <Card.Body>
               <Card.Title>{stagesNames[tkIndex]}</Card.Title>
               <ListGroup variant="flush">
-                {kanbanTasks.map((task, taskIndex) => {
+                {kanbanTasks?.map((task, taskIndex) => {
                   return (
                     <ListGroup.Item key={`${task.name}${taskIndex}`}>
                       {task.name}

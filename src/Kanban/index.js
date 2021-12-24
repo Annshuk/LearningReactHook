@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from 'rebass';
 
@@ -9,8 +9,8 @@ const stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
 /**
  * make stageTask for Cards
  */
-const createStageTasks = (tasks) =>
-  stagesNames.map((element, eindex) => {
+const createStageTasks = (tasks = []) =>
+  stagesNames.map((_, eindex) => {
     const stageTasks = [];
 
     tasks.forEach((item) => {
@@ -23,21 +23,23 @@ const createStageTasks = (tasks) =>
   });
 
 const Kanban = () => {
-  const [tasks, setTasks] = useState([
-    { name: '1', stage: 0 },
-    { name: '2', stage: 0 },
-  ]);
-
-  const tasksRef = useRef(createStageTasks(tasks));
-
-  const inputRef = useRef();
+  const [inputValue, setInput] = useState('');
+  const [tasks, setTasks] = useState(
+    createStageTasks([
+      { name: '1', stage: 0 },
+      { name: '2', stage: 0 },
+    ])
+  );
 
   const onInputChange = ({ target }) => {
-    inputRef.current = target.value;
+    setInput(target.value);
   };
 
   const addTask = () => {
-    console.log(tasks);
+    if (inputValue) {
+      setInput('');
+      setTasks(createStageTasks([...tasks[0], { name: inputValue, stage: 0 }]));
+    }
   };
 
   return (
@@ -48,7 +50,7 @@ const Kanban = () => {
 
       <section>
         <input
-          value={inputRef.current}
+          value={inputValue}
           onChange={onInputChange}
           id="create-task-input"
           type="text"
@@ -64,7 +66,7 @@ const Kanban = () => {
         </button>
       </section>
 
-      <KanbanSection tasks={tasksRef.current} stagesNames={stagesNames} />
+      <KanbanSection tasks={tasks} stagesNames={stagesNames} />
     </Box>
   );
 };
