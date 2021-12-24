@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Flex, Box } from 'rebass';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Box } from 'rebass';
 
 import { KanbanSection } from './KanbanSection';
 
