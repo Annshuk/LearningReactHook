@@ -25,6 +25,14 @@ const Kanban = () => {
     setInput(target.value);
   };
 
+  const removeTasks = (name) => {
+    setTasks((prevTask) => {
+      const removeItem = prevTask.filter((item) => item.name != name);
+      taskRef.current = createStageTasks(removeItem);
+      return removeItem;
+    });
+  };
+
   const addTask = () => {
     if (inputValue) {
       setInput('');
@@ -98,6 +106,7 @@ const Kanban = () => {
         tasks={taskRef.current}
         onBack={backwardTask}
         onForward={forwardMove}
+        onRemove={removeTasks}
       />
     </Box>
   );
