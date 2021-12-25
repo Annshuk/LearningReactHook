@@ -1,11 +1,15 @@
 import React from 'react';
 import { Flex } from 'rebass';
 import { Card, ListGroup } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  ArrowRightSquareFill,
+  ArrowLeftSquareFill,
+  XSquareFill,
+} from 'react-bootstrap-icons';
 
 import { stagesNames } from './helpers';
 
-const KanbanSection = ({ tasks, onForward, onBack }) => {
+const KanbanSection = ({ tasks, onForward, onBack, onRemove }) => {
   return (
     <Flex>
       {tasks.map((kanbanTasks, tkIndex) => {
@@ -21,18 +25,23 @@ const KanbanSection = ({ tasks, onForward, onBack }) => {
                   return (
                     <ListGroup.Item key={`${task.name}${taskIndex}`}>
                       {task.name}
-                      <button
-                        onClick={onForward(task.name)}
-                        disabled={task.stage === 3}
-                      >
-                        +
-                      </button>
-                      <button
-                        disabled={task.stage === 0}
-                        onClick={onBack(task.name)}
-                      >
-                        -
-                      </button>
+                      <Flex>
+                        <button
+                          disabled={task.stage === 0}
+                          onClick={onBack(task.name)}
+                        >
+                          <ArrowLeftSquareFill />
+                        </button>
+                        <button
+                          onClick={onForward(task.name)}
+                          disabled={task.stage === 3}
+                        >
+                          <ArrowRightSquareFill />
+                        </button>
+                        <button>
+                          <XSquareFill onClick={onRemove(task.name)} />
+                        </button>
+                      </Flex>
                     </ListGroup.Item>
                   );
                 })}
