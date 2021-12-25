@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from 'rebass';
 
@@ -6,14 +6,19 @@ import { KanbanSection } from './KanbanSection';
 
 import { createStageTasks } from './helpers';
 
+const intialTask = [
+  { name: '1', stage: 0 },
+  { name: '2', stage: 0 },
+];
+
+const tasksCreation = createStageTasks(intialTask);
+
 const Kanban = () => {
   const [inputValue, setInput] = useState('');
-  const [tasks, setTasks] = useState(
-    createStageTasks([
-      { name: '1', stage: 0 },
-      { name: '2', stage: 0 },
-    ])
-  );
+
+  const [tasks, setTasks] = useState(intialTask);
+
+  const taskRef = useRef(tasksCreation);
 
   const onInputChange = ({ target }) => {
     setInput(target.value);
@@ -22,8 +27,46 @@ const Kanban = () => {
   const addTask = () => {
     if (inputValue) {
       setInput('');
-      setTasks(createStageTasks([...tasks[0], { name: inputValue, stage: 0 }]));
+      setTasks((prevTasks) => {
+        const newTask = [...prevTasks, { name: inputValue, stage: 0 }];
+
+        taskRef.current = createStageTasks(newTask);
+
+        return newTask;
+      });
     }
+  };
+
+  const forwardMove = (name) => () => {
+    const newTask = tasks.map((task) => {
+      if (task.name == name) {
+        return {
+          ...task,
+          stage: task.stage == 3 ? 3 : task.stage + 1,
+        };
+      }
+      return task;
+    });
+
+    setTasks(newTask);
+
+    taskRef.current = createStageTasks(newTask);
+  };
+
+  const backwardTask = (name) => () => {
+    const newTask = tasks.map((task) => {
+      if (task.name == name) {
+        return {
+          ...task,
+          stage: task.stage == 0 ? 0 : task.stage - 1,
+        };
+      }
+      return task;
+    });
+
+    setTasks(newTask);
+
+    taskRef.current = createStageTasks(newTask);
   };
 
   return (
@@ -50,7 +93,11 @@ const Kanban = () => {
         </button>
       </section>
 
-      <KanbanSection tasks={tasks} />
+      <KanbanSection
+        tasks={taskRef.current}
+        onBack={backwardTask}
+        onForward={forwardMove}
+      />
     </Box>
   );
 };
