@@ -43,7 +43,7 @@ const Kanban = () => {
       if (task.name == name) {
         return {
           ...task,
-          stage: task.stage == 3 ? 3 : task.stage + 1,
+          stage: task.stage < 3 ? task.stage + 1 : 3,
         };
       }
       return task;
@@ -59,7 +59,7 @@ const Kanban = () => {
       if (task.name == name) {
         return {
           ...task,
-          stage: task.stage == 0 ? 0 : task.stage - 1,
+          stage: task.stage > 0 ? task.stage - 1 : 0,
         };
       }
       return task;
