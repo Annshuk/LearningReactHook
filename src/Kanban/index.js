@@ -13,6 +13,7 @@ const intialTask = [
 
 const tasksCreation = createStageTasks(intialTask);
 
+/**Kanban TAsk allocation */
 const Kanban = () => {
   const [inputValue, setInput] = useState('');
 

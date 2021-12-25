@@ -20,8 +20,18 @@ const KanbanSection = ({ tasks, onForward, onBack }) => {
                   return (
                     <ListGroup.Item key={`${task.name}${taskIndex}`}>
                       {task.name}
-                      <button onClick={onForward(task.name)}>+</button>
-                      <button onClick={onBack(task.name)}>-</button>
+                      <button
+                        onClick={onForward(task.name)}
+                        disabled={task.stage === 3}
+                      >
+                        +
+                      </button>
+                      <button
+                        disabled={task.stage === 0}
+                        onClick={onBack(task.name)}
+                      >
+                        -
+                      </button>
                     </ListGroup.Item>
                   );
                 })}
