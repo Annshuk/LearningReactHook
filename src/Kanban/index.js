@@ -4,23 +4,7 @@ import { Box } from 'rebass';
 
 import { KanbanSection } from './KanbanSection';
 
-const stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
-
-/**
- * make stageTask for Cards
- */
-const createStageTasks = (tasks = []) =>
-  stagesNames.map((_, eindex) => {
-    const stageTasks = [];
-
-    tasks.forEach((item) => {
-      if (item.stage === eindex) {
-        stageTasks.push(item);
-      }
-    });
-
-    return stageTasks;
-  });
+import { createStageTasks } from './helpers';
 
 const Kanban = () => {
   const [inputValue, setInput] = useState('');
@@ -66,7 +50,7 @@ const Kanban = () => {
         </button>
       </section>
 
-      <KanbanSection tasks={tasks} stagesNames={stagesNames} />
+      <KanbanSection tasks={tasks} />
     </Box>
   );
 };

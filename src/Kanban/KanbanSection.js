@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex } from 'rebass';
 import { Card, ListGroup } from 'react-bootstrap';
 
-const KanbanSection = ({ tasks, stagesNames }) => {
+import { stagesNames } from './helpers';
+
+const KanbanSection = ({ tasks, onForward, onBack }) => {
   return (
     <Flex>
       {tasks.map((kanbanTasks, tkIndex) => {
@@ -18,6 +20,8 @@ const KanbanSection = ({ tasks, stagesNames }) => {
                   return (
                     <ListGroup.Item key={`${task.name}${taskIndex}`}>
                       {task.name}
+                      <button onClick={onForward}>+</button>
+                      <button onClick={onBack}>-</button>
                     </ListGroup.Item>
                   );
                 })}
