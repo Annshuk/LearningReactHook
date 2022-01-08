@@ -11,7 +11,7 @@ const initialState = {
   test: '',
 };
 
-createStore({ ...initialState });
+createStore(initialState);
 
 render(
   <StateMachineProvider>
