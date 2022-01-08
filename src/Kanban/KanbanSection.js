@@ -1,10 +1,18 @@
 import React, { useMemo } from 'react';
 import { Flex } from 'rebass';
 import { Card, ListGroup } from 'react-bootstrap';
-import { KanbanLists } from './KanbanLists';
+import {
+  ArrowRightSquareFill,
+  ArrowLeftSquareFill,
+  XSquareFill,
+} from 'react-bootstrap-icons';
 
 import { stagesNames } from './helpers';
 
+/**
+ * KanbanSection
+ * to list the kaban
+ */
 const KanbanSection = ({ tasks = [], onForward, onBack, onRemove }) => {
   const kanbanTask = useMemo(
     () =>
@@ -17,12 +25,30 @@ const KanbanSection = ({ tasks = [], onForward, onBack, onRemove }) => {
             <Card.Body>
               <Card.Title>{stagesNames[tkIndex]}</Card.Title>
               <ListGroup variant="flush">
-                <KanbanLists
-                  lists={kanbanTasks}
-                  onForward={onForward}
-                  onBack={onBack}
-                  onRemove={onRemove}
-                />
+                {kanbanTasks?.map((task, taskIndex) => {
+                  return (
+                    <ListGroup.Item key={`${task.name}${taskIndex}`}>
+                      {task.name}
+                      <Flex>
+                        <button
+                          disabled={task.stage === 0}
+                          onClick={onBack(task.name)}
+                        >
+                          <ArrowLeftSquareFill />
+                        </button>
+                        <button
+                          onClick={onForward(task.name)}
+                          disabled={task.stage === 3}
+                        >
+                          <ArrowRightSquareFill />
+                        </button>
+                        <button>
+                          <XSquareFill onClick={onRemove(task.name)} />
+                        </button>
+                      </Flex>
+                    </ListGroup.Item>
+                  );
+                })}
               </ListGroup>
             </Card.Body>
           </Card>
