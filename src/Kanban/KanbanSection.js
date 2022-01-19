@@ -32,18 +32,18 @@ const KanbanSection = ({ tasks = [], onForward, onBack, onRemove }) => {
                       <Flex>
                         <button
                           disabled={task.stage === 0}
-                          onClick={onBack(task.name)}
+                          onClick={() => onBack(task.name)}
                         >
                           <ArrowLeftSquareFill />
                         </button>
                         <button
-                          onClick={onForward(task.name)}
+                          onClick={() => onForward(task.name)}
                           disabled={task.stage === 3}
                         >
                           <ArrowRightSquareFill />
                         </button>
                         <button>
-                          <XSquareFill onClick={onRemove(task.name)} />
+                          <XSquareFill onClick={() => onRemove(task.name)} />
                         </button>
                       </Flex>
                     </ListGroup.Item>

@@ -47,7 +47,7 @@ const Kanban = () => {
     }
   };
 
-  const forwardMove = (name) => () => {
+  const forwardMove = (name) => {
     const newTask = tasks.map((task) => {
       if (task.name == name) {
         return {
@@ -63,7 +63,7 @@ const Kanban = () => {
     taskRef.current = createStageTasks(newTask);
   };
 
-  const backwardTask = (name) => () => {
+  const backwardTask = (name) => {
     const newTask = tasks.map((task) => {
       if (task.name == name) {
         return {
