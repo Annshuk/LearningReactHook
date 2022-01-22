@@ -11,6 +11,7 @@ import { Textarea } from '../Textarea';
 
 import Greet from './Greet';
 import GreetName from './GreetName';
+import { StackText } from '../StackText';
 
 const totalCount = 90;
 /**
@@ -46,6 +47,7 @@ const Example = () => {
       <GreetName onChange={handleChange} />
       <CheckUnchecked />
       <Textarea id="textFields" maxLength={totalCount} />
+      <StackText />
     </FormProvider>
   );
 };
