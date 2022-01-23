@@ -42,6 +42,9 @@ const Example = () => {
       <nav>
         <Link to="/kanban">Kanban</Link>
       </nav>
+      <nav>
+        <Link to="/BookLists">booklist</Link>
+      </nav>
       <Greet name={state.name} />
       <br />
       <GreetName onChange={handleChange} />
