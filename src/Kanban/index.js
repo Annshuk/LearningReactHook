@@ -24,7 +24,7 @@ const Kanban = () => {
     setInput(target.value);
   };
 
-  const removeTasks = (name) => () => {
+  const removeTasks = (name) => {
     setTasks((prevTask) => {
       const removeItem = prevTask.filter((item) => item.name != name);
 
