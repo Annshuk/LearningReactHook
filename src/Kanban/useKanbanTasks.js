@@ -52,7 +52,7 @@ const useKanbanTasks = () => {
         const newTask = [...prevTask];
         const currentTask = prevTask[0].cards;
 
-        prevTask[0].cards = [
+        newTask[0].cards = [
           ...currentTask,
           { ...currentTask, cid: uuidv4(), name: value, stage: 0 },
         ];
