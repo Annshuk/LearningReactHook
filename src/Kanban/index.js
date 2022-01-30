@@ -52,7 +52,11 @@ const Kanban = () => {
       return newTask;
     });
   };
-
+  
+  /**
+   * removed task
+   * id is Task id and cid is item id
+   */
   const addTask = () => {
     if (value) {
       setValue('');
