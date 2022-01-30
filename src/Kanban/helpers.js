@@ -49,19 +49,17 @@ const goingBackward = (newTask, id, moveTask, removeItem, stage) => {
  */
 const moveOrBack = (tasks, id, itemId, action) => {
   const newTask = [...tasks];
+  const cardLists = newTask[id].cards;
 
-  const moveTask = newTask[id].cards.find((item) => item.cid === itemId);
-  const removeItem = newTask[id].cards.filter((item) => item.cid !== itemId);
+  const moveTask = cardLists.find((item) => item.cid === itemId);
+  const removeItem = cardLists.filter((item) => item.cid !== itemId);
 
   const stage = moveTask.stage;
 
   // is next of previous task
   const funcArgs = [newTask, id, moveTask, removeItem, stage];
 
-  const direction =
-    action === 3 ? goingForward(...funcArgs) : goingBackward(...funcArgs);
-
-  return newTask;
+  return action === 3 ? goingForward(...funcArgs) : goingBackward(...funcArgs);
 };
 
 export { moveOrBack };
