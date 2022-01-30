@@ -55,13 +55,11 @@ const moveOrBack = (tasks, id, itemId, action) => {
 
   const stage = moveTask.stage;
 
-  // are we going foward
-  const isForward = action === 3;
-
   // is next of previous task
-  const direction = isForward
-    ? goingForward(newTask, id, moveTask, removeItem, stage)
-    : goingBackward(newTask, id, moveTask, removeItem, stage);
+  const funcArgs = [newTask, id, moveTask, removeItem, stage];
+
+  const direction =
+    action === 3 ? goingForward(...funcArgs) : goingBackward(...funcArgs);
 
   return newTask;
 };
