@@ -31,6 +31,36 @@ const intialTask = [
   },
 ];
 
+const moveOrBack = (tasks, id, itemId, action) => {
+  const newTask = [...tasks];
+
+  const moveTask = newTask[id].cards.find((item) => item.cid === itemId);
+  const removeItem = newTask[id].cards.filter((item) => item.cid !== itemId);
+
+  const stage = moveTask.stage;
+
+  newTask[id].cards = [...removeItem];
+
+  const isForward = action === 3;
+  const direction = isForward ? id + 1 : id - 1;
+
+  newTask[direction].cards = [
+    ...newTask[direction].cards,
+    {
+      ...moveTask,
+      stage: isForward
+        ? stage < 3
+          ? stage + 1
+          : 3
+        : stage > 0
+        ? stage - 1
+        : 0,
+    },
+  ];
+
+  return newTask;
+};
+
 /**Kanban TAsk allocation */
 const Kanban = () => {
   const [value, setValue] = useState('');
@@ -75,22 +105,7 @@ const Kanban = () => {
    * move forward
    */
   const forwardMove = (id, cid) => {
-    setTasks((prevTask) => {
-      const newTask = [...prevTask];
-      const moveTask = newTask[id].cards.find((item) => item.cid === cid);
-      const removeItem = newTask[id].cards.filter((item) => item.cid !== cid);
-
-      const stage = moveTask.stage;
-
-      newTask[id].cards = [...removeItem];
-
-      newTask[id + 1].cards = [
-        ...newTask[id + 1].cards,
-        { ...moveTask, stage: stage < 3 ? stage + 1 : 3 },
-      ];
-
-      return newTask;
-    });
+    setTasks((prevTask) => moveOrBack(prevTask, id, cid, 3));
   };
 
   /**
@@ -99,24 +114,7 @@ const Kanban = () => {
    */
 
   const backwardTask = (id, cid) => {
-    setTasks((prevTask) => {
-      const newTask = [...prevTask];
-
-      const moveTask = newTask[id].cards.find((item) => item.cid === cid);
-      const removeItem = newTask[id].cards.filter((item) => item.cid !== cid);
-
-      const stage = moveTask.stage;
-
-      //keeping remaining task
-      newTask[id].cards = [...removeItem];
-
-      newTask[id - 1].cards = [
-        ...newTask[id - 1].cards,
-        { ...moveTask, stage: stage > 0 ? stage - 1 : 0 },
-      ];
-
-      return newTask;
-    });
+    setTasks((prevTask) => moveOrBack(prevTask, id, cid, 0));
   };
 
   return (
