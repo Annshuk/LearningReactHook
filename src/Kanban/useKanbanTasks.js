@@ -50,7 +50,7 @@ const useKanbanTasks = () => {
 
       setTasks((prevTask) => {
         const newTask = [...prevTask];
-        const currentTask = prevTask[0].cards;
+        const currentTask = newTask[0].cards;
 
         newTask[0].cards = [
           ...currentTask,

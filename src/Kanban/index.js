@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from 'rebass';
 
@@ -7,6 +7,8 @@ import { useKanbanTasks } from './useKanbanTasks';
 
 /**Kanban TAsk allocation */
 const Kanban = () => {
+  const [value, setValue] = useState('');
+
   const {
     forwardMove,
     backwardTask,
@@ -14,8 +16,7 @@ const Kanban = () => {
     onInputChange,
     addTask,
     tasks,
-    value,
-  } = useKanbanTasks();
+  } = useKanbanTasks({ value, setValue });
 
   return (
     <Box>
