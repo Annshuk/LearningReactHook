@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Box } from 'rebass';
 
 import { KanbanSection } from './KanbanSection';
+import { moveOrBack } from './helpers';
 
 const intialTask = [
   {
@@ -31,36 +32,6 @@ const intialTask = [
   },
 ];
 
-const moveOrBack = (tasks, id, itemId, action) => {
-  const newTask = [...tasks];
-
-  const moveTask = newTask[id].cards.find((item) => item.cid === itemId);
-  const removeItem = newTask[id].cards.filter((item) => item.cid !== itemId);
-
-  const stage = moveTask.stage;
-
-  newTask[id].cards = [...removeItem];
-
-  const isForward = action === 3;
-  const direction = isForward ? id + 1 : id - 1;
-
-  newTask[direction].cards = [
-    ...newTask[direction].cards,
-    {
-      ...moveTask,
-      stage: isForward
-        ? stage < 3
-          ? stage + 1
-          : 3
-        : stage > 0
-        ? stage - 1
-        : 0,
-    },
-  ];
-
-  return newTask;
-};
-
 /**Kanban TAsk allocation */
 const Kanban = () => {
   const [value, setValue] = useState('');
@@ -68,6 +39,28 @@ const Kanban = () => {
 
   const onInputChange = ({ target }) => {
     setValue(target.value);
+  };
+
+  /**
+   * addTask task
+   * add new TAsk
+   */
+  const addTask = () => {
+    if (value) {
+      setValue('');
+
+      setTasks((prevTask) => {
+        const newTask = [...prevTask];
+        const currentTask = prevTask[0].cards;
+
+        prevTask[0].cards = [
+          ...currentTask,
+          { ...currentTask, cid: uuidv4(), name: value, stage: 0 },
+        ];
+
+        return newTask;
+      });
+    }
   };
 
   /**
@@ -82,24 +75,6 @@ const Kanban = () => {
       return newTask;
     });
   };
-
-  /**
-   * addTask task
-   * add new TAsk
-   */
-  const addTask = () => {
-    if (value) {
-      setValue('');
-
-      setTasks((prevTask) => {
-        const newTask = [...prevTask];
-        prevTask[0].cards.push({ cid: uuidv4(), name: value, stage: 0 });
-
-        return newTask;
-      });
-    }
-  };
-
   /**
    * forwardMove task
    * move forward
