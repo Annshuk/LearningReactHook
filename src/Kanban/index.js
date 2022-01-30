@@ -75,6 +75,7 @@ const Kanban = () => {
       return newTask;
     });
   };
+
   /**
    * forwardMove task
    * move forward
@@ -87,7 +88,6 @@ const Kanban = () => {
    * backwardTask
    * move backward
    */
-
   const backwardTask = (id, cid) => {
     setTasks((prevTask) => moveOrBack(prevTask, id, cid, 0));
   };
