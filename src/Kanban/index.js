@@ -1,82 +1,108 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 import { Box } from 'rebass';
 
 import { KanbanSection } from './KanbanSection';
 
-import { createStageTasks } from './helpers';
-
 const intialTask = [
-  { name: '1', stage: 0 },
-  { name: '2', stage: 0 },
+  {
+    id: 1,
+    title: 'Backlog',
+    cards: [
+      { name: 'tasks 1', stage: 0, cid: uuidv4() },
+      { name: 'tasks 2', stage: 0, cid: uuidv4() },
+    ],
+  },
+  {
+    id: 2,
+    title: 'Todo',
+    cards: [],
+  },
+  {
+    id: 3,
+    title: 'InProgress',
+    cards: [],
+  },
+  {
+    id: 4,
+    title: 'Done',
+    cards: [],
+  },
 ];
-
-const tasksCreation = createStageTasks(intialTask);
 
 /**Kanban TAsk allocation */
 const Kanban = () => {
-  const [inputValue, setInput] = useState('');
+  const [value, setValue] = useState('');
   const [tasks, setTasks] = useState(intialTask);
 
-  const taskRef = useRef(tasksCreation);
-
   const onInputChange = ({ target }) => {
-    setInput(target.value);
+    setValue(target.value);
   };
 
-  const removeTasks = (name) => {
-    setTasks((prevTask) => {
-      const removeItem = prevTask.filter((item) => item.name != name);
+  /**
+   * removed task
+   * id is Task id and cid is item id
+   */
+  const removeTasks = (id, cid) => {
+    setTasks((prevState) => {
+      const newTask = [...prevState];
+      newTask[id].cards = newTask[id].cards.filter((item) => item.cid !== cid);
 
-      taskRef.current = createStageTasks(removeItem);
-
-      return removeItem;
+      return newTask;
     });
   };
 
   const addTask = () => {
-    if (inputValue) {
-      setInput('');
-      setTasks((prevTasks) => {
-        const newTask = [...prevTasks, { name: inputValue, stage: 0 }];
+    if (value) {
+      setValue('');
 
-        taskRef.current = createStageTasks(newTask);
+      setTasks((prevTask) => {
+        const newTask = [...prevTask];
+        prevTask[0].cards.push({ cid: uuidv4(), name: value, stage: 0 });
 
         return newTask;
       });
     }
   };
 
-  const forwardMove = (name) => {
-    const newTask = tasks.map((task) => {
-      if (task.name == name) {
-        return {
-          ...task,
-          stage: task.stage < 3 ? task.stage + 1 : 3,
-        };
-      }
-      return task;
+  const forwardMove = (id, cid) => {
+    setTasks((prevTask) => {
+      const newTask = [...prevTask];
+      const moveTask = newTask[id].cards.find((item) => item.cid === cid);
+      const removeItem = newTask[id].cards.filter((item) => item.cid !== cid);
+
+      const stage = moveTask.stage;
+
+      newTask[id].cards = [...removeItem];
+
+      newTask[id + 1].cards = [
+        ...newTask[id + 1].cards,
+        { ...moveTask, stage: stage < 3 ? stage + 1 : 3 },
+      ];
+
+      return newTask;
     });
-
-    setTasks(newTask);
-
-    taskRef.current = createStageTasks(newTask);
   };
 
-  const backwardTask = (name) => {
-    const newTask = tasks.map((task) => {
-      if (task.name == name) {
-        return {
-          ...task,
-          stage: task.stage > 0 ? task.stage - 1 : 0,
-        };
-      }
-      return task;
+  const backwardTask = (id, cid) => {
+    setTasks((prevTask) => {
+      const newTask = [...prevTask];
+
+      const moveTask = newTask[id].cards.find((item) => item.cid === cid);
+      const removeItem = newTask[id].cards.filter((item) => item.cid !== cid);
+
+      const stage = moveTask.stage;
+
+      newTask[id].cards = [...removeItem];
+
+      newTask[id - 1].cards = [
+        ...newTask[id - 1].cards,
+        { ...moveTask, stage: stage > 0 ? stage - 1 : 0 },
+      ];
+
+      return newTask;
     });
-
-    setTasks(newTask);
-
-    taskRef.current = createStageTasks(newTask);
   };
 
   return (
@@ -87,7 +113,7 @@ const Kanban = () => {
 
       <section>
         <input
-          value={inputValue}
+          value={value}
           onChange={onInputChange}
           id="create-task-input"
           type="text"
@@ -104,7 +130,7 @@ const Kanban = () => {
       </section>
 
       <KanbanSection
-        tasks={taskRef.current}
+        tasks={tasks}
         onBack={backwardTask}
         onForward={forwardMove}
         onRemove={removeTasks}

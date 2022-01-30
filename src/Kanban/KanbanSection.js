@@ -16,34 +16,34 @@ import { stagesNames } from './helpers';
 const KanbanSection = ({ tasks = [], onForward, onBack, onRemove }) => {
   const kanbanTask = useMemo(
     () =>
-      tasks.map((kanbanTasks, tkIndex) => {
+      tasks.map(({ cards, title, id }, taskId) => {
         return (
           <Card
             style={{ width: '18rem', marginTop: '10px', marginRight: '10px' }}
-            key={tkIndex}
+            key={id}
           >
             <Card.Body>
-              <Card.Title>{stagesNames[tkIndex]}</Card.Title>
+              <Card.Title>{title}</Card.Title>
               <ListGroup variant="flush">
-                {kanbanTasks?.map((task, taskIndex) => {
+                {cards.map(({ name, stage, cid }) => {
                   return (
-                    <ListGroup.Item key={`${task.name}${taskIndex}`}>
-                      {task.name}
+                    <ListGroup.Item key={cid}>
+                      {name}
                       <Flex>
                         <button
-                          disabled={task.stage === 0}
-                          onClick={() => onBack(task.name)}
+                          disabled={stage === 0}
+                          onClick={() => onBack(taskId, cid)}
                         >
                           <ArrowLeftSquareFill />
                         </button>
                         <button
-                          onClick={() => onForward(task.name)}
-                          disabled={task.stage === 3}
+                          onClick={() => onForward(taskId, cid)}
+                          disabled={stage === 3}
                         >
                           <ArrowRightSquareFill />
                         </button>
                         <button>
-                          <XSquareFill onClick={() => onRemove(task.name)} />
+                          <XSquareFill onClick={() => onRemove(taskId, cid)} />
                         </button>
                       </Flex>
                     </ListGroup.Item>
