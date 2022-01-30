@@ -52,10 +52,10 @@ const Kanban = () => {
       return newTask;
     });
   };
-  
+
   /**
-   * removed task
-   * id is Task id and cid is item id
+   * addTask task
+   * add new TAsk
    */
   const addTask = () => {
     if (value) {
@@ -70,6 +70,10 @@ const Kanban = () => {
     }
   };
 
+  /**
+   * forwardMove task
+   * move forward
+   */
   const forwardMove = (id, cid) => {
     setTasks((prevTask) => {
       const newTask = [...prevTask];
@@ -89,6 +93,11 @@ const Kanban = () => {
     });
   };
 
+  /**
+   * backwardTask
+   * move backward
+   */
+
   const backwardTask = (id, cid) => {
     setTasks((prevTask) => {
       const newTask = [...prevTask];
@@ -98,6 +107,7 @@ const Kanban = () => {
 
       const stage = moveTask.stage;
 
+      //keeping remaining task
       newTask[id].cards = [...removeItem];
 
       newTask[id - 1].cards = [
