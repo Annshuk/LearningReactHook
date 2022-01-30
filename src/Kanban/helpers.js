@@ -36,7 +36,7 @@ const goingBackward = (newTask, id, moveTask, removeItem, stage) => {
     ...newTask[id - 1].cards,
     {
       ...moveTask,
-      stage: stage > 3 ? stage - 1 : 0,
+      stage: stage > 0 ? stage - 1 : 0,
     },
   ];
 
