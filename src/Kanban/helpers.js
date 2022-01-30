@@ -51,7 +51,10 @@ const moveOrBack = (tasks, id, itemId, action) => {
   const newTask = [...tasks];
   const cardLists = newTask[id].cards;
 
+  //picking
   const moveTask = cardLists.find((item) => item.cid === itemId);
+
+  //omiting
   const removeItem = cardLists.filter((item) => item.cid !== itemId);
 
   const stage = moveTask.stage;
