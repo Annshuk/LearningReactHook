@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { moveOrBack } from './helpers';
@@ -33,8 +33,7 @@ const intialTask = [
  * useKanbanTasks
  * custom hook for all method
  */
-const useKanbanTasks = () => {
-  const [value, setValue] = useState('');
+const useKanbanTasks = ({ value, setValue }) => {
   const [tasks, setTasks] = useState(intialTask);
   const onInputChange = ({ target }) => {
     setValue(target.value);

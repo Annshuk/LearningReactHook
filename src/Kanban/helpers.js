@@ -43,6 +43,8 @@ const goingBackward = (newTask, id, moveTask, removeItem, stage) => {
   return newTask;
 };
 
+const hasSameId = (fid, sid) => fid === sid;
+
 /**
  * Move or backward
  * Single function to handle back or forth
@@ -52,10 +54,10 @@ const moveOrBack = (tasks, id, itemId, action) => {
   const cardLists = newTask[id].cards;
 
   //picking
-  const moveTask = cardLists.find((item) => item.cid === itemId);
+  const moveTask = cardLists.find(({ cid }) => hasSameId(cid, itemId));
 
   //omiting
-  const removeItem = cardLists.filter((item) => item.cid !== itemId);
+  const removeItem = cardLists.filter(({ cid }) => !hasSameId(cid, itemId));
 
   const stage = moveTask.stage;
 
