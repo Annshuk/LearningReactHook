@@ -43,7 +43,7 @@ const goingBackward = (newTask, id, moveTask, removeItem, stage) => {
   return newTask;
 };
 
-const hasSameId = (fid, sid) => fid === sid;
+export const hasSameId = (fid, sid) => fid === sid;
 
 /**
  * Move or backward
@@ -59,7 +59,7 @@ const moveOrBack = (tasks, id, itemId, action) => {
   //omiting
   const removeItem = cardLists.filter(({ cid }) => !hasSameId(cid, itemId));
 
-  const stage = moveTask.stage;
+  const { stage } = moveTask;
 
   // is next of previous task
   const funcArgs = [newTask, id, moveTask, removeItem, stage];

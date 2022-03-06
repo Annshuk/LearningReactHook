@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { moveOrBack } from './helpers';
+import { moveOrBack, hasSameId } from './helpers';
 
 const intialTask = [
   {
@@ -35,6 +35,7 @@ const intialTask = [
  */
 const useKanbanTasks = ({ value, setValue }) => {
   const [tasks, setTasks] = useState(intialTask);
+
   const onInputChange = ({ target }) => {
     setValue(target.value);
   };
@@ -44,31 +45,36 @@ const useKanbanTasks = ({ value, setValue }) => {
    * add new TAsk
    */
   const addTask = () => {
-    if (value) {
-      setValue('');
-
-      setTasks((prevTask) => {
-        const newTask = [...prevTask];
-        const currentTask = newTask[0].cards;
-
-        newTask[0].cards = [
-          ...currentTask,
-          { ...currentTask, cid: uuidv4(), name: value, stage: 0 },
-        ];
-
-        return newTask;
-      });
+    if (!value) {
+      return;
     }
+
+    setValue('');
+
+    setTasks((prevTask) => {
+      const newTask = [...prevTask];
+      const currentTask = newTask[0].cards;
+
+      newTask[0].cards = [
+        ...currentTask,
+        { ...currentTask, cid: uuidv4(), name: value, stage: 0 },
+      ];
+
+      return newTask;
+    });
   };
 
   /**
    * removed task
    * id is Task id and cid is item id
    */
-  const removeTasks = (id, cid) => {
+  const removeTasks = (id, currentId) => {
     setTasks((prevState) => {
       const newTask = [...prevState];
-      newTask[id].cards = newTask[id].cards.filter((item) => item.cid !== cid);
+
+      newTask[id].cards = newTask[id].cards.filter(
+        ({ cid }) => !hasSameId(cid, currentId)
+      );
 
       return newTask;
     });
