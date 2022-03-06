@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from 'rebass';
 
@@ -7,16 +7,17 @@ import { useKanbanTasks } from './useKanbanTasks';
 
 /**Kanban TAsk allocation */
 const Kanban = () => {
-  const [value, setValue] = useState('');
+  const valueRef = useRef('');
 
   const {
     forwardMove,
     backwardTask,
     removeTasks,
-    onInputChange,
     addTask,
     tasks,
-  } = useKanbanTasks({ value, setValue });
+    onInputChange,
+    value,
+  } = useKanbanTasks({ value: valueRef });
 
   return (
     <Box>
@@ -26,12 +27,12 @@ const Kanban = () => {
 
       <section>
         <input
-          value={value}
-          onChange={onInputChange}
           id="create-task-input"
           type="text"
           placeholder="New task name"
           data-testid="create-task-input"
+          onChange={onInputChange}
+        
         />
         <button
           onClick={addTask}

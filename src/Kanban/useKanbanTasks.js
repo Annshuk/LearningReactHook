@@ -33,11 +33,12 @@ const intialTask = [
  * useKanbanTasks
  * custom hook for all method
  */
-const useKanbanTasks = ({ value, setValue }) => {
+const useKanbanTasks = ({ value }) => {
   const [tasks, setTasks] = useState(intialTask);
 
   const onInputChange = ({ target }) => {
-    setValue(target.value);
+    value.current = target.value;
+    console.log(target.value);
   };
 
   /**
@@ -45,11 +46,9 @@ const useKanbanTasks = ({ value, setValue }) => {
    * add new TAsk
    */
   const addTask = () => {
-    if (!value) {
+    if (!value.current) {
       return;
     }
-
-    setValue('');
 
     setTasks((prevTask) => {
       const newTask = [...prevTask];
@@ -57,8 +56,10 @@ const useKanbanTasks = ({ value, setValue }) => {
 
       newTask[0].cards = [
         ...currentTask,
-        { ...currentTask, cid: uuidv4(), name: value, stage: 0 },
+        { ...currentTask, cid: uuidv4(), name: value.current, stage: 0 },
       ];
+
+      value.current = '';
 
       return newTask;
     });
@@ -100,10 +101,10 @@ const useKanbanTasks = ({ value, setValue }) => {
     forwardMove,
     backwardTask,
     removeTasks,
-    onInputChange,
     addTask,
     tasks,
-    value,
+    onInputChange,
+    value: value.current,
   };
 };
 
