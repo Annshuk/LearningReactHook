@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import {
   Container,
@@ -49,9 +49,9 @@ const StackText = () => {
             <ComponentPreview>
               <strong>{headline}</strong>
               <ul>
-                {bullet.map((value) => {
-                  return <li>{value}</li>;
-                })}
+                {bullet.map((value) => (
+                  <li key={value}>{value}</li>
+                ))}
               </ul>
             </ComponentPreview>
           </EditorColumn>
@@ -69,23 +69,21 @@ const StackText = () => {
                   }}
                 />
 
-                {bullet.map((text, i) => {
-                  return (
-                    <>
-                      <Typography>Bullet #{i + 1}</Typography>
-                      <Row>
-                        <BulletInput
-                          placeholder="Enter text"
-                          value={text}
-                          onChange={(e) => onChangeHandler(i, e.target.value)}
-                        />
-                        <DeleteButton onClick={() => handleRemoveClick(i)}>
-                          Delete
-                        </DeleteButton>
-                      </Row>
-                    </>
-                  );
-                })}
+                {bullet.map((text, i) => (
+                  <Fragment key={`${i}_${text}`}>
+                    <Typography>Bullet #{i + 1}</Typography>
+                    <Row>
+                      <BulletInput
+                        placeholder="Enter text"
+                        value={text}
+                        onChange={(e) => onChangeHandler(i, e.target.value)}
+                      />
+                      <DeleteButton onClick={() => handleRemoveClick(i)}>
+                        Delete
+                      </DeleteButton>
+                    </Row>
+                  </Fragment>
+                ))}
                 <AddButton onClick={handleAddClick}>
                   <span>+ </span> Add Bullet
                 </AddButton>

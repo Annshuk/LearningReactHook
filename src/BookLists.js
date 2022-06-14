@@ -21,7 +21,7 @@ const BookLists = () => {
     <section className="booklist">
       <ul>
         {bookLists.map((book, index) => (
-          <Book key={index} label={book} />
+          <Book key={`${book}_${index}`} label={book} />
         ))}
       </ul>
 
