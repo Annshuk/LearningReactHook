@@ -13,10 +13,10 @@ const GreetName = ({ onChange, ...rest }) => {
     <Flex flexDirection="column" width="200px" {...rest}>
       <Text>{errors?.name?.message}</Text>
       <input
-        {...register('name', { required: 'Name is Required' })}
-        onChange={onChange}
+        {...register('name', { required: 'Name is Required', onChange })}
       />
       <br />
+      ...
       <Text>{errors?.first?.message}</Text>
       <input {...register('first', { required: 'First Name is Required' })} />
       <br />
