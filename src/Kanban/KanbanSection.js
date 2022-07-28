@@ -7,8 +7,6 @@ import {
   XSquareFill,
 } from 'react-bootstrap-icons';
 
-import { stagesNames } from './helpers';
-
 /**
  * KanbanSection
  * to list the kaban
