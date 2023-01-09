@@ -30,7 +30,11 @@ const CheckUnchecked = (props) => {
 
   return (
     <Box mt="1rem">
-      <input type="checkbox" checked={allSelected} onClick={handleAllChecked} />{' '}
+      <input
+        type="checkbox"
+        checked={allSelected}
+        onChange={handleAllChecked}
+      />{' '}
       Check/unchecked
       <Box mt="1rem">
         {Object.entries(formData).map(([key, value]) => {
